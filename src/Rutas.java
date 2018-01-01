@@ -56,42 +56,40 @@ public class Rutas {
 		airnormal.CrearAeropuertos(aeropuertos);
 		normal.crearRutas(rutas);
 		mapa = rutas;
-		
-		
+
+
 		String[] aero = airnormal.VerificarAeropuertos();
 		String[] origen = normal.ComprobarAeroOrigen();
 		String[] destino = normal.ComprobarAeroDestino();
-		
-		
-		
-		
+
+
 		Iterator<Map.Entry<String, String>> entries = rutas.entrySet().iterator();
-		while(entries.hasNext()){
-			Map.Entry<String, String> entry = entries.next();
-			
-			String source = entry.getKey();
-			
-			for (int i=0;i<origen.length;i++){
-				if (source.equals(origen[i])){
-					System.out.println(source + " Se encuentra");
-					entries.next();
-					break;
-				}else{
-					System.out.println(source + " No se encuentra");
-					entries.next();
-					break;
+
+		for (int i=0;i<aero.length; i++){
+			for (int j=0;j<origen.length;j++){
+				
+				if (aero[i].equals(origen[j])){
+					System.out.println(" Aeropuerto origen : " + origen[j] + " Se encuentra");
+					if (aero[i].equals(destino[j])){
+						System.out.println("Aeropuerto destino: " + destino[j] + " Se encuentra ");
+						
+						grafo.addEdge(origen[j] + " , " + destino[j], origen[j], destino[j]);
+					}
 				}
+				
+				
 			}
 		}
-		
-		
+	}
+
+
 
 	//	Iterator<Map.Entry<String, String>> entries = rutas.entrySet().iterator();
-	} 
 
-	
+
+
 	public void CrearFicheroAeroOrigen() throws FileNotFoundException{
-		
+
 		Rutas c = new Rutas();
 		String[] comparador = c.ComprobarAeroOrigen();
 		int size = comparador.length;
@@ -110,10 +108,10 @@ public class Rutas {
 			}
 		}
 	}
-	
+
 	public String[] ComprobarAeroOrigen() throws FileNotFoundException{
-	
-		
+
+
 		boolean cambios=false;
 		String token1 = "";
 
@@ -128,13 +126,13 @@ public class Rutas {
 		inFile1.close();
 
 		String[] rutasorigen = temps.toArray(new String[0]);
-		
+
 		return rutasorigen;
 	}
 
-	
+
 	public void CrearFicheroAeroDestino() throws FileNotFoundException{
-		
+
 		Rutas c = new Rutas();
 		String[] comparador = c.ComprobarAeroOrigen();
 		int size = comparador.length;
@@ -153,10 +151,10 @@ public class Rutas {
 			}
 		}
 	}
-	
+
 	public String[] ComprobarAeroDestino() throws FileNotFoundException{
-	
-		
+
+
 		boolean cambios=false;
 		String token1 = "";
 
@@ -171,8 +169,8 @@ public class Rutas {
 		inFile1.close();
 
 		String[] rutasorigen = temps.toArray(new String[0]);
-		
+
 		return rutasorigen;
 	}
-	
+
 }

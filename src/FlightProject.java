@@ -25,7 +25,7 @@ public class FlightProject {
 		rutas.ComprobarAeroOrigen();
 		rutas.CrearFicheroAeroDestino();
 		rutas.CrearFicheroAeroDestino();
-		//graph.display();
+		graph.display();
 		
 		
 		/*
