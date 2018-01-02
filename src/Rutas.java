@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import org.graphstream.graph.Graph;
@@ -19,6 +20,9 @@ public class Rutas {
 	private Airport origen;
 	private Airport destino;
 	private HashMap<String,String> mapa;
+	private ArrayList<String> origenRutas = new ArrayList<String>();
+	private ArrayList<String> destinoRutas = new ArrayList<String>();
+
 
 	public Rutas(Airport origen, Airport destino){
 		this.origen = origen;
@@ -63,23 +67,45 @@ public class Rutas {
 		String[] destino = normal.ComprobarAeroDestino();
 
 
-		Iterator<Map.Entry<String, String>> entries = rutas.entrySet().iterator();
-
+		/*Iterator<Map.Entry<String, String>> entries = rutas.entrySet().iterator();
+		while(entries.hasNext()){
+			Map.Entry<String, String> entry = entries.next();
+			
+		}*/
+		
+		
 		for (int i=0;i<aero.length; i++){
 			for (int j=0;j<origen.length;j++){
 				
-				if (aero[i].equals(origen[j])){
-					System.out.println(" Aeropuerto origen : " + origen[j] + " Se encuentra");
-					if (aero[i].equals(destino[j])){
-						System.out.println("Aeropuerto destino: " + destino[j] + " Se encuentra ");
+				if (origen[j].equals(aero[i])){
+						//System.out.println("Aeropuerto de origen encontrado " + origen[j]);
+						String airdestino = rutas.get(origen[j]);
+						//System.out.println("Aeropuerto de destino " + airdestino);
 						
-						grafo.addEdge(origen[j] + " , " + destino[j], origen[j], destino[j]);
-					}
+						origenRutas.add(origen[j]);
+					
 				}
 				
 				
 			}
 		}
+		
+		for (int k=0;k<aero.length; k++){
+			for (int l = 0 ; l<destino.length; l++){
+				if (destino[l].equals(aero[k])){
+					System.out.println("Aeropuerto de destino encontrado: " + destino[l] + " asd");
+					destinoRutas.add(destino[l]);
+				}
+			}
+		}
+		
+		
+		for (int it=0;it<destinoRutas.size();it++){
+			String value = destinoRutas.get(it);
+			String key = origenRutas.get(it);
+			
+		}
+		
 	}
 
 
