@@ -9,21 +9,33 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Scanner;
 
 import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
 
 public class Airport {
+	private String ID;
+	private String ciudad;
+	private String pais;
 	private String nombreAeropuerto;
-	private String IATA;
+	private String ICAO;
 	private Lector lector;
 	private HashMap<String,Airport> mapa;
 	private Airport a;
+	private HashMap<String, String> latia = new HashMap<String,String>();
+	private HashMap<String, String> longa = new HashMap<String,String>();
 
-	public Airport(String nombre, String iata){
+	
+
+	public Airport(String id,String nombre, String ciudad, String pais,String icao){
 		this.nombreAeropuerto = nombre;
-		this.IATA = iata;
+		this.ICAO = icao;
+		this.ID = id;
+		this.ciudad = ciudad;
+		this.pais = pais;
 
 	}
 
@@ -54,12 +66,23 @@ public class Airport {
 			String country = split[3];
 			String iata = split[4];
 			String icao = split[5];
+			String lat = split[6];
+			String lon = split[7];
+			String alt = split[8];
 			String regex = "(\")|(,)";
-			String aa = airport.replaceAll(regex, "");
+			
+			
+			
+			String nombre = airport.replaceAll(regex, "");
 			String newId = id.replaceAll(regex,"");
+			String newCity = city.replaceAll(regex,"");
+			String newCountry = country.replaceAll(regex,"");
 			String newiata = iata.replaceAll(regex,"");
 			String newicao = icao.replaceAll(regex,"");
-
+			String latitude = lat.replaceAll(regex, "");
+			String longitude = lon.replaceAll(regex, "");
+			String altitude = alt.replaceAll(regex, "");
+			
 
 
 
@@ -69,28 +92,134 @@ public class Airport {
 
 
 			if (newiata.length()>3){
-				Airport aeropuerto = new Airport(aa,newicao);	
+				Airport aeropuerto = new Airport(newId, nombre, newCity+newCountry, newiata, latitude);	
 				lista.put(newicao, aeropuerto);
+				latia.put(newicao, longitude);
+				longa.put(newicao, altitude);
 
 			}
 
 			else{
-				Airport aeropuerto = new Airport(aa,newiata);	
+				Airport aeropuerto = new Airport(newId, nombre, newCity, newCountry,newicao);	
 				lista.put(newiata,aeropuerto);
+				latia.put(newiata, latitude);
+				longa.put(newiata, longitude);
 			}
-
 
 
 
 		}
 
-		//System.out.println(lista.size());
-		//System.out.println("Contador " + contador);
+		Iterator it = lista.entrySet().iterator();
+		while (it.hasNext()){
+			Map.Entry<String, Airport> entry = (Map.Entry<String, Airport>) it.next();
+			String key = entry.getKey();
+			if (key.matches("[^0-9]")){
+				System.out.println("ERRRORRRRR " + key);
+			}
+		}
+		System.out.println(lista.size());
 		mapa=lista;
 		return lista;
 	}
 
 
+
+	public String getID() {
+		return ID;
+	}
+
+	public void setID(String iD) {
+		ID = iD;
+	}
+
+	public String getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
+
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+
+	public String getICAO() {
+		return ICAO;
+	}
+
+	public void setICAO(String iCAO) {
+		ICAO = iCAO;
+	}
+
+	public HashMap<String, Airport> getMapa() {
+		return mapa;
+	}
+
+	public void setMapa(HashMap<String, Airport> mapa) {
+		this.mapa = mapa;
+	}
+
+	public Airport getA() {
+		return a;
+	}
+
+	public void setA(Airport a) {
+		this.a = a;
+	}
+
+	public HashMap<String, String> getLatia() {
+		return latia;
+	}
+
+	public void setLatia(HashMap<String, String> latia) {
+		this.latia = latia;
+	}
+
+	public HashMap<String, String> getLonga() {
+		return longa;
+	}
+
+	public void setLonga(HashMap<String, String> longa) {
+		this.longa = longa;
+	}
+
+	public void CrearNodosAeropuertos(Graph grafo) throws IOException{
+		String regex = "\\d+.";
+		Iterator it = mapa.entrySet().iterator();
+		while (it.hasNext()){
+			Map.Entry<String, Airport> entry = (Map.Entry<String, Airport>) it.next();
+			String iata = entry.getKey();
+			grafo.addNode(iata);
+			Node n = grafo.getNode(iata);
+			n.setAttribute("x", longa.get(iata));
+			n.setAttribute("y", latia.get(iata));
+			n.addAttribute("ui.label", n.getId());
+			
+			
+		}
+
+	}
+	
+	
+	public String[] CrearArrayAeropuertos(){
+		String[] iata =  mapa.keySet().toArray(new String[0]);
+		
+		
+		for (int i=0; i<iata.length;i++){
+			//System.out.println("Info del array " + iata[i]);
+		}
+		return iata;
+	}
+
+
+
+	/*
 	public void CrearNodosAeropuertos(HashMap<String, Airport> aeropuertos, Graph grafo) throws IOException{
 		Airport a = new Airport();
 		a.CrearAeropuertos(aeropuertos);
@@ -101,9 +230,9 @@ public class Airport {
 			property.put(entry.getKey(), entry.getValue());
 			grafo.addNode(entry.getKey());
 		}
-		
+
 		mapa = aeropuertos;
-		
+
 	}
 
 	public String[] VerificarAeropuertos() throws IOException{
@@ -128,25 +257,30 @@ public class Airport {
 	}
 
 	public void CrearFicheroAeropuertos() throws IOException{
-		Airport c = new Airport();
-		String[] comparador = c.VerificarAeropuertos();
-		int size = comparador.length;
+
 		Iterator<Map.Entry<String, Airport>> entries = mapa.entrySet().iterator();
-		if (comparador.length>size){
-			while (entries.hasNext()) {
-				Map.Entry<String, Airport> entry = entries.next();
-				try{
-					FileWriter fw = new FileWriter("C:/Users/Jaime/Documents/aeropuertos.txt",true);
-					fw.write(entry.getKey()+System.lineSeparator());
-					fw.close();
-				}catch(IOException e){
-					e.printStackTrace();
+
+		for (String a : mapa.keySet()){
+			try{
+				String path = "C:/Users/Jaime/Documents/aeropuertos.txt";
+				File file = new File(path);
+
+				if (!file.exists()){
+					file.createNewFile();
 				}
 
+				FileWriter fw = new FileWriter(file.getAbsoluteFile());
+				BufferedWriter bw = new BufferedWriter(fw);
+				bw.write(a);
+				bw.close();
+
+			} catch (IOException e){
+				e.printStackTrace();
 			}
 		}
-	}
 
+	}
+	 */
 
 	public String getNombreAeropuerto() {
 		return nombreAeropuerto;
@@ -157,11 +291,11 @@ public class Airport {
 	}
 
 	public String getIATA() {
-		return IATA;
+		return ICAO;
 	}
 
 	public void setIATA(String iATA) {
-		IATA = iATA;
+		ICAO = iATA;
 	}
 
 	public Lector getLector() {
