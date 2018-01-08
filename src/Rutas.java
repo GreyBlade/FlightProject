@@ -43,7 +43,7 @@ public class Rutas {
 	public HashMap<String,String> crearRutas(HashMap rutas) throws IOException{
 		lector = new Lector();
 		airnormal = new Airport();
-		String[] lineas = lector.Leer("C:/Users/Jaime/Documents/routes.dat");		
+		String[] lineas = lector.Leer("assets/routes.dat");		
 
 
 		for (int i=0; i<lineas.length; i++){

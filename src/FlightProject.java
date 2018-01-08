@@ -45,7 +45,11 @@ public class FlightProject {
 		dijkstra.setSource(graph.getNode("PKC"));
 		dijkstra.compute();
 		
+		for (Node node : dijkstra.getPathNodes(graph.getNode("SAL")))
+			node.addAttribute("ui.style", "fill-color: blue;");
 		
+		for (Edge edge : dijkstra.getTreeEdges())
+			edge.addAttribute("ui.style", "fill-color: red;");
 		
 		System.out.println(dijkstra.getPath(graph.getNode("SAL")));
 

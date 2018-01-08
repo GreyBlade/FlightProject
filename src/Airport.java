@@ -47,7 +47,7 @@ public class Airport {
 		int contador=0;
 		lector=new Lector();
 
-		String[] lineas = lector.Leer("C:/Users/Jaime/Documents/airports.dat");
+		String[] lineas = lector.Leer("assets/airports.dat");
 		for (int i=0; i<lineas.length; i++){
 			String info = lineas[i];
 
