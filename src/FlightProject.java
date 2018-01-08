@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
 
+import org.graphstream.algorithm.APSP;
+import org.graphstream.algorithm.APSP.APSPInfo;
 import org.graphstream.algorithm.Dijkstra;
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.DefaultGraph;
@@ -26,20 +28,32 @@ public class FlightProject {
 		String[] a=null;
 		String[] ru =null;
 		String[] rudes = null;
-		
-		
+
+
 		aeropuertos.CrearAeropuertos(airports);
 		a = aeropuertos.CrearArrayAeropuertos();
 		aeropuertos.CrearNodosAeropuertos(graph);
 		rutas.crearRutas(routes);
+		//rutas.Test(graph);
 		ru = rutas.CrearArrayAeropuertosOrigen();
 		rudes = rutas.CrearArrayAeropuertosDestino();
 		rutas.CrearAristas(graph);
-		graph.display().disableAutoLayout();
-		Dijkstra dijkstra = new Dijkstra(Dijkstra.Element.EDGE, null, "length");
+		
+		Dijkstra dijkstra = new Dijkstra(Dijkstra.Element.EDGE, null,null);
+		
 		dijkstra.init(graph);
-		dijkstra.setSource(graph.getNode("SFO"));
+		dijkstra.setSource(graph.getNode("PKC"));
 		dijkstra.compute();
+		
+		
+		
+		System.out.println(dijkstra.getPath(graph.getNode("SAL")));
+
+		
+		
+
+
+		graph.display().disableAutoLayout();
 
 
 	}
