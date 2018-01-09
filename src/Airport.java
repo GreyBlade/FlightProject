@@ -85,12 +85,6 @@ public class Airport {
 			
 
 
-
-			//System.out.println(newId + " " + newiata);
-			//int identificacion = Integer.parseInt(newiata);
-
-
-
 			if (newiata.length()>3){
 				Airport aeropuerto = new Airport(newId, nombre, newCity+newCountry, newiata, latitude);	
 				lista.put(newicao, aeropuerto);
@@ -115,7 +109,6 @@ public class Airport {
 			Map.Entry<String, Airport> entry = (Map.Entry<String, Airport>) it.next();
 			String key = entry.getKey();
 			if (key.matches("[^0-9]")){
-				//System.out.println("ERRRORRRRR " + key);
 			}
 		}
 		System.out.println(lista.size());
@@ -212,75 +205,13 @@ public class Airport {
 		
 		
 		for (int i=0; i<iata.length;i++){
-			//System.out.println("Info del array " + iata[i]);
 		}
 		return iata;
 	}
 
 
 
-	/*
-	public void CrearNodosAeropuertos(HashMap<String, Airport> aeropuertos, Graph grafo) throws IOException{
-		Airport a = new Airport();
-		a.CrearAeropuertos(aeropuertos);
-		Properties property = new Properties();
-		Iterator<Map.Entry<String, Airport>> entries = aeropuertos.entrySet().iterator();
-		while (entries.hasNext()) {
-			Map.Entry<String, Airport> entry = entries.next();
-			property.put(entry.getKey(), entry.getValue());
-			grafo.addNode(entry.getKey());
-		}
-
-		mapa = aeropuertos;
-
-	}
-
-	public String[] VerificarAeropuertos() throws IOException{
-		boolean cambios=false;
-		String token1 = "";
-
-		Scanner inFile1 = new Scanner(new File("C:/Users/Jaime/Documents/aeropuertos.txt"));
-		ArrayList<String> temps = new ArrayList<String>();
-
-		while (inFile1.hasNext()) {
-			// find next line
-			token1 = inFile1.next();
-			temps.add(token1);
-		}
-		inFile1.close();
-
-		String[] iata = temps.toArray(new String[0]);
-		//System.out.println(iata.length);
-
-
-		return iata;
-	}
-
-	public void CrearFicheroAeropuertos() throws IOException{
-
-		Iterator<Map.Entry<String, Airport>> entries = mapa.entrySet().iterator();
-
-		for (String a : mapa.keySet()){
-			try{
-				String path = "C:/Users/Jaime/Documents/aeropuertos.txt";
-				File file = new File(path);
-
-				if (!file.exists()){
-					file.createNewFile();
-				}
-
-				FileWriter fw = new FileWriter(file.getAbsoluteFile());
-				BufferedWriter bw = new BufferedWriter(fw);
-				bw.write(a);
-				bw.close();
-
-			} catch (IOException e){
-				e.printStackTrace();
-			}
-		}
-
-	}
-	 */
+	
 
 	public String getNombreAeropuerto() {
 		return nombreAeropuerto;

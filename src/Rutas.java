@@ -70,34 +70,24 @@ public class Rutas {
 			String key = entry.getKey();
 			String value = entry.getValue();
 
-			//System.out.println("key -> " + key + " value -> " + value);
-
-			//System.out.println("pair with a key: " + key + " with a value of: " + value);
 		}
 
-		//System.out.println("RUTAAAS " + rutas.size());
-		//System.out.println("hm " + hm.size());
+
 		return rutas;
 	}
 
 	public String[] CrearArrayAeropuertosOrigen(){
 		String[] iataOrigen = hm.keySet().toArray(new String[0]);
-		//System.out.println("Array origen " + iataOrigen.length);
 		for (int i=0; i<iataOrigen.length; i++){
-			//System.out.println("Aeropuertos de origen " + iataOrigen[i]);
 		}
-		//System.out.println(iataOrigen.length);
 		return iataOrigen;
 	}
 
 	public String[] CrearArrayAeropuertosDestino(){
 		String[] iataDestino = hm.values().toArray(new String[0]);
-		//System.out.println("Array destino " + iataDestino.length);
 
 		for (int i=0; i<iataDestino.length; i++){
-			//System.out.println("Aeropuertos de destino " + iataDestino[i]);
 		}
-		//System.out.println(iataDestino.length);
 		return iataDestino;
 	}
 
@@ -110,16 +100,13 @@ public class Rutas {
 		String[] Origenes = null;
 		for (int i=0;i<comprobacion.length; i++){
 
-			//System.out.println("Full match: " + matcher.group(0));
 			comprobacion[i] = comprobacion[i].replaceAll(regex,"");
-			//  System.out.println(comprobacion[i]);
 
 		}
 
 		for (int i=0; i<comprobacion.length; i++){
 			for (int j=0; j<aeros.length; j++){
 				if (comprobacion[i].equals(aeros[j])){
-					//System.out.println("Se encontro aeropuerto origen existente -> " + comprobacion[i]);
 					ao.add(comprobacion[i]);
 				}
 			}
@@ -139,7 +126,6 @@ public class Rutas {
 		for (int i=0; i<destino.length; i++){
 			for (int j=0; j<aeros.length; j++){
 				if (destino[i].equals(aeros[j])){
-					//System.out.println("Se encontro aeropuerto destino existente -> " + destino[i]);
 					ad.add(destino[i]);
 				}
 			}
@@ -204,226 +190,6 @@ public class Rutas {
 		}
 		System.out.println(aas.size());
 
-		return aas;
-
-		/*	Iterator a = hm.entrySet().iterator();
-		while (a.hasNext()){
-			Map.Entry<String, String> entry = (Map.Entry<String, String>) a.next();
-			String keys = entry.getKey();
-			String newKeys = entry.getKey().replaceAll(regex, "");
-			String values = entry.getValue();
-			String iataDestino = values.replaceAll(regex, "");
-			String idAerolinea = values.replaceAll(regex2,"");	
-
-			grafo.setStrict(false);
-			int contador =0;
-			if (A.contains(newKeys)){
-				String dest = hm.get(keys);
-
-				if (B.contains(dest)){
-					contador++;
-					String c = Integer.toString(contador);
-					System.out.println("RUTA ENCONTRADA " + newKeys + " -> " + dest);
-					//grafo.setStrict(false);
-
-				}
-			}
-		}*/
-
-
-		/*Iterator entries = rutasActualizadas.entrySet().iterator();
-		int a =0;
-		while (entries.hasNext()){
-			Map.Entry<String, String> entry =( Map.Entry<String, String>) entries.next();
-			a++;
-			String keys = entry.getKey();
-			String newKeys = entry.getKey().replaceAll(regex, "");
-			String values = entry.getValue();
-
-			grafo.addEdge(a + " , " + keys + " , " + values, newKeys, values);
-		}*/
+		return aas;	
 	}
-
-	/*public void crearRutasAristas(HashMap<String, String> rutas,HashMap<String,Airport> aeropuertos,Graph grafo) throws IOException{
-		Rutas normal = new Rutas();
-		airnormal = new Airport();
-		airnormal.CrearAeropuertos(aeropuertos);
-		normal.crearRutas(rutas);
-		mapa = rutas;
-
-
-		System.out.println("tama de rutas: " + rutas.size());
-		String[] aero = airnormal.VerificarAeropuertos();
-		//String[] origen = normal.ComprobarAeroOrigen();
-		//String[] destino = normal.ComprobarAeroDestino();
-
-
-
-		Iterator<Map.Entry<String, String>> entries = rutas.entrySet().iterator();
-		while(entries.hasNext()){
-			Map.Entry<String, String> entry = entries.next();
-
-		}
-
-
-		for (int i=0;i<aero.length; i++){
-			for (int j=0;j<origen.length;j++){
-
-				if (origen[j].equals(aero[i])){
-					//System.out.println("Aeropuerto de origen encontrado " + origen[j]);
-
-					//PORQUE .get devuelve el value en este caso el aeropuerto destino
-					String airdestino="";
-					if (rutas.containsValue(rutas.get(origen[j]))){
-						airdestino = rutas.get(origen[j]);
-
-						//System.out.println("Aeropuerto de destino " + airdestino + " para el origen " + origen[j]);
-
-
-					}
-
-					origenRutas.add(airdestino);
-
-				}
-
-
-			}
-		}
-
-		for (int k=0;k<aero.length; k++){
-			for (int l = 0 ; l<destino.length; l++){
-				if (destino[l].equals(aero[k])){
-					//System.out.println("Aeropuerto de destino encontrado: " + destino[l] + " asd");
-					destinoRutas.add(destino[l]);
-				}
-			}
-		}
-
-		String[] keys = origenRutas.toArray(new String[0]);
-		String[] values = destinoRutas.toArray(new String[0]);
-		System.out.println(keys.length);
-		System.out.println(values.length);
-
-		String origenaero;
-		String destinoaero;
-
-		for (Entry<String, String> entry : rutas.entrySet()) {
-			String ori = entry.getKey();
-			String desti = entry.getValue();
-			//System.out.println("Conexion entre: " + ori + " con: " + desti);
-		}
-
-
-		ArrayList<String> LlavesOriginales = new ArrayList<String>(rutas.keySet());
-		ArrayList<String> LlavesActualizadas = new ArrayList<String>(rutasActualizadas.keySet());
-
-
-
-	}
-
-
-
-	//	Iterator<Map.Entry<String, String>> entries = rutas.entrySet().iterator();
-
-
-
-	public void CrearFicheroAeroOrigen() throws FileNotFoundException{
-
-		Iterator<Map.Entry<String, String>> entries = mapa.entrySet().iterator();
-		while (entries.hasNext()) {
-			Map.Entry<String, String> entry = entries.next();
-			try{
-				String path = "C:/Users/Jaime/Documents/rutaorigen.txt";
-				File file = new File(path);
-
-				if (!file.exists()){
-					file.createNewFile();
-				}
-
-				FileWriter fw = new FileWriter(file.getAbsoluteFile());
-				BufferedWriter bw = new BufferedWriter(fw);
-
-				bw.write(entry.getKey()+System.lineSeparator());
-				bw.close();
-
-			}catch(IOException e){
-				e.printStackTrace();
-			}
-
-		}
-
-	}
-
-	public String[] ComprobarAeroOrigen() throws FileNotFoundException{
-
-
-		boolean cambios=false;
-		String token = "";
-
-		Scanner inFile = new Scanner(new File("C:/Users/Jaime/Documents/rutaorigen.txt"));
-		ArrayList<String> temps = new ArrayList<String>();
-
-		while (inFile.hasNext()) {
-			// find next line
-			token = inFile.next();
-			//System.out.println("origen " + token);
-			temps.add(token);
-		}
-		inFile.close();
-
-		String[] rutasorigen = temps.toArray(new String[0]);
-
-		return rutasorigen;
-	}
-
-
-	public void CrearFicheroAeroDestino() throws FileNotFoundException{
-
-		Iterator<Map.Entry<String, String>> entries = mapa.entrySet().iterator();
-		while (entries.hasNext()) {
-			Map.Entry<String, String> entry = entries.next();
-			try{
-				String path = "C:/Users/Jaime/Documents/rutadestino.txt";
-				File file = new File(path);
-
-				if (!file.exists()){
-					file.createNewFile();
-				}
-
-
-				FileWriter fw = new FileWriter(file.getAbsoluteFile());
-				BufferedWriter bw = new BufferedWriter(fw);
-				bw.write(entry.getValue()+System.lineSeparator());
-				bw.close();
-			}catch(IOException e){
-				e.printStackTrace();
-			}
-
-		}
-
-	}
-
-	public String[] ComprobarAeroDestino() throws FileNotFoundException{
-
-
-		boolean cambios=false;
-		String token1 = "";
-
-		Scanner inFile1 = new Scanner(new File("C:/Users/Jaime/Documents/rutadestino.txt"));
-		ArrayList<String> temps1 = new ArrayList<String>();
-
-		while (inFile1.hasNext()) {
-			// find next line
-			token1 = inFile1.next();
-			//System.out.println("destino "  + token1);
-			temps1.add(token1);
-		}
-		inFile1.close();
-
-		String[] rutasdestino= temps1.toArray(new String[0]);
-
-		return rutasdestino;
-	}
-	 */
-
 }

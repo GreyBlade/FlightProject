@@ -42,7 +42,9 @@ public class Ventana {
 	private String aa="";
 	private String b="";
 	private Dijkstra dij = new Dijkstra(Dijkstra.Element.EDGE, null,null);
-	private ArrayList<Node> list1 = new ArrayList<Node>();
+	private ArrayList<String> list1 = new ArrayList<String>();
+	private String ax = "";
+	private String bx = "";
 	
 
 
@@ -110,16 +112,6 @@ public class Ventana {
 
 
 
-		/*dijkstra.setSource(graph.getNode("PKC"));
-		dijkstra.compute();
-
-		for (Node node : dijkstra.getPathNodes(graph.getNode("SAL")))
-			node.addAttribute("ui.style", "fill-color: blue;");
-
-		for (Edge edge : dijkstra.getTreeEdges())
-			edge.addAttribute("ui.style", "fill-color: red;");
-
-		System.out.println(dijkstra.getPath(graph.getNode("SAL")));*/
 
 
 		aeroOrigen.setBounds(12, 32, 129, 28);
@@ -153,15 +145,26 @@ public class Ventana {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				
-				
-				for (int i=0;i<list1.size();i++){
-					list1.remove(i);
+				if (list1.size()>0){
+					graph.getNode(list1.get(0)).addAttribute("ui.style", "fill-color: black");
+					graph.getNode(list1.get(1)).addAttribute("ui.style", "fill-color: black");
+					list1.clear();
+
 				}
+			
+				
+				
 				
 				String regex = "\\s\\w+";
 				String origen = String.valueOf(aeroOrigen.getSelectedItem()).replaceAll(regex,"");
 				String destino = String.valueOf(aeroDestino.getSelectedItem()).replaceAll(regex,"");
+				
+				list1.add(0,origen);
+				list1.add(1,destino);
+				
+				
+		
+
 				
 				b=destino;
 				Dijkstra dijkstra = new Dijkstra(Dijkstra.Element.EDGE, null,null);
@@ -186,13 +189,6 @@ public class Ventana {
 				else{
 					textField.setText(b);
 				}
-				
-				
-				for (Node node : dijkstra.getPathNodes(graph.getNode(destino)))
-					list1.add(node);
-
-
-
 			}
 		});
 		btnEncontrarRutas.setBounds(66, 84, 200, 28);
