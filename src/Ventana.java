@@ -42,7 +42,7 @@ public class Ventana {
 	private String aa="";
 	private String b="";
 	private Dijkstra dij = new Dijkstra(Dijkstra.Element.EDGE, null,null);
-	private ArrayList<String> list1 = new ArrayList<String>();
+	private ArrayList<Node> list1 = new ArrayList<Node>();
 	private String ax = "";
 	private String bx = "";
 	
@@ -148,10 +148,14 @@ public class Ventana {
 			public void mouseClicked(MouseEvent e) {
 				
 				if (list1.size()>0){
-					graph.getNode(list1.get(0)).addAttribute("ui.style", "fill-color: black;");
-					graph.getNode(list1.get(1)).addAttribute("ui.style", "fill-color: black;");
+					Node a;
+					for (int i=0;i<list1.size();i++){
+						a = list1.get(i);
+						String id = a.getId();
+						graph.getNode(id).addAttribute("ui.style", "fill-color: black;");
+					}
+					
 					list1.clear();
-
 				}
 			
 				
@@ -161,8 +165,7 @@ public class Ventana {
 				String origen = String.valueOf(aeroOrigen.getSelectedItem()).replaceAll(regex,"");
 				String destino = String.valueOf(aeroDestino.getSelectedItem()).replaceAll(regex,"");
 				
-				list1.add(0,origen);
-				list1.add(1,destino);
+				
 				
 				
 		
@@ -176,7 +179,12 @@ public class Ventana {
 				dijkstra.compute();
 
 				for (Node node : dijkstra.getPathNodes(graph.getNode(destino)))
-					node.addAttribute("ui.style", "fill-color: red;");
+					node.addAttribute("ui.style", "fill-color: blue;");
+					
+				for (Node node : dijkstra.getPathNodes(graph.getNode(destino)))
+					list1.add(0, node);
+				
+					
 
 
 
