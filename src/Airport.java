@@ -115,7 +115,7 @@ public class Airport {
 			Map.Entry<String, Airport> entry = (Map.Entry<String, Airport>) it.next();
 			String key = entry.getKey();
 			if (key.matches("[^0-9]")){
-				System.out.println("ERRRORRRRR " + key);
+				//System.out.println("ERRRORRRRR " + key);
 			}
 		}
 		System.out.println(lista.size());

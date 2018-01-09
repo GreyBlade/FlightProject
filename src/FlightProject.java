@@ -16,7 +16,7 @@ public class FlightProject {
 
 	public static void main(String[]args) throws IOException{
 
-		Graph graph = new MultiGraph("Prueba1");
+		/*Graph graph = new MultiGraph("Prueba1");
 		graph.setStrict(false);
 		graph.setAutoCreate(true);
 
@@ -51,13 +51,16 @@ public class FlightProject {
 		for (Edge edge : dijkstra.getTreeEdges())
 			edge.addAttribute("ui.style", "fill-color: red;");
 		
-		System.out.println(dijkstra.getPath(graph.getNode("SAL")));
+		System.out.println(dijkstra.getPath(graph.getNode("SAL")));*/
+
+		Ventana window = new Ventana();
+		window.frame.setVisible(true);
+		
 
 		
-		
 
 
-		graph.display().disableAutoLayout();
+		//graph.display().disableAutoLayout();
 
 
 	}

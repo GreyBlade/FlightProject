@@ -198,7 +198,7 @@ public class Rutas {
 			if (A.contains(newKeys)&&(B.contains(iataDestino))){
 				String icao = ia.get(newKeys).getIATA();
 				
-				grafo.addEdge(newKeys + " " + iataDestino, newKeys, iataDestino);
+				grafo.addEdge(newKeys + " " + iataDestino, newKeys, iataDestino).addAttribute("ui.style", "fill-color: yellow;");;
 			}
 
 		}
