@@ -85,6 +85,8 @@ public class Ventana {
 		Graph graph = new MultiGraph("Prueba1");
 		graph.setStrict(false);
 		graph.setAutoCreate(true);
+		//graph.addAttribute("ui.stylesheet", "graph { fill-color: blue; }");
+
 
 		Airport aeropuertos = new Airport();
 		Rutas rutas = new Rutas();
@@ -146,8 +148,8 @@ public class Ventana {
 			public void mouseClicked(MouseEvent e) {
 				
 				if (list1.size()>0){
-					graph.getNode(list1.get(0)).addAttribute("ui.style", "fill-color: black");
-					graph.getNode(list1.get(1)).addAttribute("ui.style", "fill-color: black");
+					graph.getNode(list1.get(0)).addAttribute("ui.style", "fill-color: black;");
+					graph.getNode(list1.get(1)).addAttribute("ui.style", "fill-color: black;");
 					list1.clear();
 
 				}
